@@ -35,4 +35,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retroVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retroVersion"
 
+    // This is to track what we are sending to url
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+
 }

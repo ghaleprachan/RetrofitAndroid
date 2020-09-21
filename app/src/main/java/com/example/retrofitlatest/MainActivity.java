@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,10 +46,21 @@ public class MainActivity extends AppCompatActivity {
          *  Make a gson object and pass to GsonConverterFactory.create(gson)
          *  if not don't do anything leave it as it is*/
 
+        /*
+         * TODO to track what data we are sending to out URL
+         *  we have to use another library and add dependency*/
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+
         Gson gson = new GsonBuilder().serializeNulls().create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://jsonplaceholder.typicode.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okHttpClient)
                 .build();
         /*
          * With above retrofit we can now create JSON Placeholder API*/
@@ -61,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         // createPost();
         // createPostXML();
         // createPostMap();
-        // updatePostPut();
+        updatePostPut();
         // updatePostPatch();
-        deletePost();
+        // deletePost();
     }
 
     // TODO this is for DELETE
