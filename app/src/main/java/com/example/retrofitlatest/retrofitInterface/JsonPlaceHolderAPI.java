@@ -59,7 +59,7 @@ public interface JsonPlaceHolderAPI {
      * For this we will use QueryMap and MAP<String, String> as method parameter
      * This method decides the parameters only when we call this method
      * In map we can put some key value pairs
-     * TODO
+     * TODO "posts?userId=1&_sort=id&_order=desc"
      *  Key is 'userId' and value is '2'*/
     @GET("posts")
     Call<List<PostModel>> getPostQueryMap(@QueryMap Map<String, String> parameters);

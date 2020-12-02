@@ -47,14 +47,18 @@ public class MainActivity extends AppCompatActivity {
          *  if not don't do anything leave it as it is*/
 
         /*
-         * TODO to track what data we are sending to out URL
-         *  we have to use another library and add dependency*/
+         * TODO to track what data we are sending to out URL and getting in response
+         *  we have to use another library and add dependency
+         *  After that we need to add client in retrofit instance
+         *  for this we use HttpLoggingInterceptor*/
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        // Setting level as BODY will track everything
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
 
+        /*To accept the null values we should do this*/
         Gson gson = new GsonBuilder().serializeNulls().create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         /*
          * With above retrofit we can now create JSON Placeholder API*/
         jsonPlaceHolderAPI = retrofit.create(JsonPlaceHolderAPI.class);
-        // getPosts();
+         getPosts();
         // getComments();
         // getPostsByQuery();
         // getPostMultQuery();
@@ -74,13 +78,15 @@ public class MainActivity extends AppCompatActivity {
         // createPost();
         // createPostXML();
         // createPostMap();
-        updatePostPut();
+//        updatePostPut();
         // updatePostPatch();
         // deletePost();
     }
 
     // TODO this is for DELETE
     private void deletePost() {
+        /*Retrofit will make a implementation for this method automatically
+        * There for we simple call method make making API using retrofit instance*/
         Call<Void> call = jsonPlaceHolderAPI.deletePost(5);
         call.enqueue(new Callback<Void>() {
             @SuppressLint("SetTextI18n")
